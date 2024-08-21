@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8050:8050"
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: qua
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/minha_database?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create
+  db:
+    image: mysql:5.7.44-oraclelinux7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: minha_database
+
+    ports:
+      - "3306:3306"
